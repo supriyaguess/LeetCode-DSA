@@ -14,9 +14,9 @@ public:
     bool isValid(string s) {
         stack<char> st;
         for (char c : s) {
-            if (c == '(' || c == '{' || c == '[') {
+            if (c == '(' || c == '{' || c == '[') { //opening
                 st.push(c);
-            } else {
+            } else { // closing
                 if (st.empty()) return false;
                 char top = st.top();
                 st.pop();
@@ -29,7 +29,7 @@ public:
         }
         return st.empty();
     }
-};
+}; // TC = O(n) SC = O(n)
 
 int main() {
     Solution sol;
