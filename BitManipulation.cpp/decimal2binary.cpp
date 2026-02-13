@@ -10,7 +10,7 @@ string decimalToBinary(int n) {
     while (n > 0) {
         binary += (n % 2) + '0';
         n /= 2;
-    }
+    }  //TC = O(log2n) SC = O(log2n)
 
     reverse(binary.begin(), binary.end());
     return binary;
