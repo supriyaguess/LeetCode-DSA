@@ -1,77 +1,146 @@
-==============================
-BIT MANIPULATION – CORE OPERATORS
-==============================
+========================================
+BIT MANIPULATION – COMPLETE CORE NOTES
+========================================
 
+NOTE:
+C++ stores signed integers in 2’s complement form.
+Most systems use 32-bit signed integers.
+
+
+----------------------------------------
 1) Bitwise AND (&)
-------------------
+----------------------------------------
+
 Rule:
 1 & 1 = 1
 Otherwise = 0
 
-Example:
-5  = 0101
-3  = 0011
-------------
-5 & 3 = 0001 = 1
+Example (Positive):
+5  = 00000000 00000000 00000000 00000101
+3  = 00000000 00000000 00000000 00000011
+----------------------------------------
+5 & 3 = 00000000 00000000 00000000 00000001 = 1
+
+Negative Case:
+-5 (2’s complement) =
+11111111 11111111 11111111 11111011
+
+-5 & 3:
+11111111 11111111 11111111 11111011
+00000000 00000000 00000000 00000011
+-----------------------------------
+00000000 00000000 00000000 00000011 = 3
 
 Uses:
-- Check even/odd -> (n & 1)
-- Check kth bit  -> (n >> k) & 1
+- Check even/odd → (n & 1)
+- Check kth bit → (n >> k) & 1
 - Masking bits
 
 
+----------------------------------------
 2) Logical OR (||)
-------------------
-Used in conditions.
-Returns true(1) if at least one condition is true.
+----------------------------------------
+
+Used in conditions only.
+Returns true (1) if at least one condition is true.
 
 Example:
 if (a > 0 || b > 0)
 
-NOTE:
+Important:
 || is NOT bitwise.
 Bitwise OR is single pipe: |
 
 
+----------------------------------------
 3) Bitwise NOT (~)
-------------------
+----------------------------------------
+
 Flips all bits (1’s complement).
+2. Cheack -ve  if yes then 2's compliment if not -ve then stop
 
-Example:
+Example (Positive):
 n = 5
-Binary: 00000101
-~n     = 11111010
+00000000 00000000 00000000 00000101
+~n =
+11111111 11111111 11111111 11111010
 
-Important:
-~n + 1 = -n   (2’s complement concept)
+Value = -6
+
+Important Identity:
+~n = -(n + 1)
+~n + 1 = -n
 
 
+Example (Negative):
+n = -5
+Binary:
+11111111 11111111 11111111 11111011
+
+~n =
+00000000 00000000 00000000 00000100 = 4
+
+
+----------------------------------------
 4) Left Shift (<<)
-------------------
-Shifts bits to left.
+----------------------------------------
 
-n << k  =  n * (2^k)   (for positive numbers)
+Shifts bits left.
+
+For positive numbers:
+n << k = n * (2^k)
 
 Example:
-5 = 00000101
-5 << 1 = 00001010 = 10
+5 << 1 = 10
+5 << 2 = 20
+
+Binary:
+00000101 << 1 = 00001010
+
+Negative Case:
+-5 << 1 = -10
+(Still multiplies by 2, but beware of overflow)
+left shift boundary (2pow31-1) can not go overflow
+
+Warning:
+If shift causes overflow → undefined behavior.
 
 
+----------------------------------------
 5) Right Shift (>>)
--------------------
-Shifts bits to right.
+----------------------------------------
 
-n >> k = n / (2^k)   (for positive numbers)
+Shifts bits right.
+
+For positive numbers:
+n >> k = n / (2^k)
 
 Example:
-8 = 00001000
-8 >> 1 = 00000100 = 4
+8 >> 1 = 4
+16 >> 2 = 4
+
+Binary:
+00001000 >> 1 = 00000100
+
+Negative Case:
+C++ uses arithmetic right shift.
+Sign bit is preserved.
+
+Example:
+-8 =
+11111111 11111111 11111111 11111000
+
+-8 >> 1 =
+11111111 11111111 11111111 11111100 = -4
+
 
 
 IMPORTANT INTERVIEW PATTERNS
-----------------------------
+
+
 Check even:
-if (n & 1)
+if (n & 1) → odd
+else → even
 
 Check kth bit:
 if ((n >> k) & 1)
@@ -84,3 +153,9 @@ n = n & ~(1 << k)
 
 Toggle kth bit:
 n = n ^ (1 << k)
+
+Remove last set bit:
+n = n & (n - 1)
+
+Check power of 2:
+if (n > 0 && (n & (n - 1)) == 0)
