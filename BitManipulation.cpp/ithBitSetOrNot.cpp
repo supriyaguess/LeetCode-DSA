@@ -7,6 +7,7 @@ bool isKthBitSet(int n, int k) {
 }
 
 // Set kth bit
+
 int setKthBit(int n, int k) {
     return n | (1 << k);
 }
