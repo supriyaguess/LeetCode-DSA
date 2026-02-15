@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int totalSum = accumulate(nums.begin(), nums.end(), 0);
+        
+        // Edge cases
+        if (abs(target) > totalSum) return 0;
+        if ((target + totalSum) % 2 != 0) return 0;
+        
+        int sum = (target + totalSum) / 2;
+        
+        // DP array
+        vector<int> dp(sum + 1, 0);
+        dp[0] = 1;  // One way to make sum 0
+        
+        for (int num : nums) {
+            for (int j = sum; j >= num; j--) {
+                dp[j] += dp[j - num];
+            }
+        }
+        
+        return dp[sum];
+    }
+};
+
+int main() {
+    Solution sol;
+    vector<int> nums = {1,1,1,1,1};
+    int target = 3;
+    
+    cout << sol.findTargetSumWays(nums, target);
+    return 0;
+}
